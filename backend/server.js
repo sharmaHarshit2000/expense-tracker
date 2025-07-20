@@ -3,9 +3,9 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 
 //Routes
-import authRoutes from "./routes/authRoutes.js"
+import authRoutes from "./routes/authRoutes.js";
 import expenseRoutes from "./routes/expenseRoutes.js";
-
+import auditRoutes from "./routes/auditRoutes.js";
 
 // Not Found and Global Error handler
 import notFound from "./middlewares/notFound.js";
@@ -24,8 +24,9 @@ app.get("/", (req, res) => {
 });
 
 // Route mounting
-app.use("/api/auth", authRoutes)
-app.use("/api/expenses", expenseRoutes)
+app.use("/api/auth", authRoutes);
+app.use("/api/expenses", expenseRoutes);
+app.use("/api/audit-logs", auditRoutes);
 
 //Error handler
 app.use(notFound);
