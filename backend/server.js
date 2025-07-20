@@ -4,6 +4,8 @@ import connectDB from "./config/db.js";
 
 //Routes
 import authRoutes from "./routes/authRoutes.js"
+import expenseRoutes from "./routes/expenseRoutes.js";
+
 
 // Not Found and Global Error handler
 import notFound from "./middlewares/notFound.js";
@@ -23,6 +25,7 @@ app.get("/", (req, res) => {
 
 // Route mounting
 app.use("/api/auth", authRoutes)
+app.use("/api/expenses", expenseRoutes)
 
 //Error handler
 app.use(notFound);
