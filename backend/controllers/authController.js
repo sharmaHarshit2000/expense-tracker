@@ -82,3 +82,19 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: "Login failed" });
   }
 };
+
+// Get the user details based on the token
+export const getMe = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (err) {
+    console.error("GetMe Error:", err);
+    res.status(500).json({ message: "Failed to fetch user" });
+  }
+};
