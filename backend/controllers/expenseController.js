@@ -1,4 +1,5 @@
 import Expense from "../models/Expense.js";
+import AuditLog from "../models/AuditLog.js";
 
 // Add an expense
 export const addExpense = async (req, res) => {
@@ -47,16 +48,32 @@ export const updateExpenseStatus = async (req, res) => {
   }
 
   try {
-    const expense = await Expense.findById(req.params.id);
+    const expense = await Expense.findById(req.params.id).populate(
+      "user",
+      "name email"
+    );
+
     if (!expense) {
       return res.status(404).json({ message: "Expense not found" });
     }
 
+    const prevStatus = expense.status;
+    if (prevStatus === status) {
+      return res.status(200).json({ message: `Status already '${status}'` });
+    }
+
     expense.status = status;
     await expense.save();
-    res.status(200).json(expense);
+
+    await AuditLog.create({
+      user: req.user._id,
+      action: `Marked Expense as ${status}`,
+      details: `Admin (${req.user.email}) changed status of expense ₹${expense.amount} from ${prevStatus} to ${status} for user ${expense.user.email}`,
+    });
+
+    res.status(200).json({ message: "Expense status updated", expense });
   } catch (err) {
-    console.error("Update Status Error:", err.message);
-    res.status(400).json({ message: "Failed to update status" });
+    console.error("Update Status Error:", err);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
