@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ExpenseForm from "./pages/ExpenseForm";
 import AdminPanel from "./pages/AdminPanel";
+import AuditLogs from "./pages/AuditLogs";
 
 const App = () => {
     return (
@@ -31,6 +32,14 @@ const App = () => {
                 element={
                     <ProtectedRoute adminOnly>
                         <AdminPanel />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/audit-logs"
+                element={
+                    <ProtectedRoute adminOnly>
+                        <AuditLogs />
                     </ProtectedRoute>
                 }
             />

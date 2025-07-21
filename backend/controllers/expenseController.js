@@ -58,6 +58,7 @@ export const updateExpenseStatus = async (req, res) => {
     }
 
     const prevStatus = expense.status;
+
     if (prevStatus === status) {
       return res.status(200).json({ message: `Status already '${status}'` });
     }
@@ -67,8 +68,9 @@ export const updateExpenseStatus = async (req, res) => {
 
     await AuditLog.create({
       user: req.user._id,
-      action: `Marked Expense as ${status}`,
-      details: `Admin (${req.user.email}) changed status of expense ₹${expense.amount} from ${prevStatus} to ${status} for user ${expense.user.email}`,
+      targetUser: expense.user._id,
+      action: `Expense ${status}`,
+      details: `Admin ${req.user.email} changed status of expense ₹${expense.amount} from ${prevStatus} to ${status} for user ${expense.user.email}`,
     });
 
     res.status(200).json({ message: "Expense status updated", expense });
