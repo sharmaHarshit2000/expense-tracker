@@ -34,7 +34,12 @@ const AuditLogs = () => {
             <Typography
                 variant="h4"
                 gutterBottom
-                className="text-center font-extrabold text-gray-800 mb-6"
+                align="center"
+                sx={{
+                    fontWeight: "bold",
+                    color: "text.primary",
+                    mb: 6,
+                }}
             >
                 Audit Logs
             </Typography>
@@ -44,9 +49,22 @@ const AuditLogs = () => {
                     <CircularProgress />
                 </Box>
             ) : logs.length === 0 ? (
-                <Typography className="text-center text-gray-600">
-                    No logs available.
-                </Typography>
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        minHeight: "80vh",
+                    }}
+                >
+                    <Typography
+                        variant="h6"
+                        align="center"
+                        sx={{ color: "text.secondary" }}
+                    >
+                        No logs available.
+                    </Typography>
+                </Box>
             ) : (
                 <Box className="grid gap-4 max-w-3xl mx-auto">
                     {logs.map((log) => (
