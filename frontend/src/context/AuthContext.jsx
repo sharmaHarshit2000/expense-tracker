@@ -6,7 +6,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(() => localStorage.getItem("token"));
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -15,18 +15,24 @@ export const AuthProvider = ({ children }) => {
           const res = await getMe();
           setUser(res.data);
         } catch (err) {
-          logout(); 
+          logout();
         }
       }
-      setLoading(false); 
+      setLoading(false);
     };
 
     fetchUser();
   }, [token]);
 
-  const login = ({ token }) => {
+  const login = async ({ token }) => {
     localStorage.setItem("token", token);
     setToken(token);
+    try {
+      const res = await getMe();
+      setUser(res.data);
+    } catch (err) {
+      logout();
+    }
   };
 
   const logout = () => {
