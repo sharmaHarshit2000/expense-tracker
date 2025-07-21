@@ -1,9 +1,12 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext"
+import Loader from "./Loader";
 
 const ProtectedRoute = ({ children, adminOnly = false }) => {
 
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
+
+    if (loading) return <Loader />;
 
     // Not logged in: redirect to login
     if (!user) return <Navigate to="/" replace />
