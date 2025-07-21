@@ -24,15 +24,15 @@ const LoginPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (password.length < 6) {
-            toast.error("Password must be at least 6 characters");
+        if (password.length < 5) {
+            toast.error("Password must be at least 5 characters");
             return;
         }
 
         setLoading(true);
         try {
             const res = await loginUser({ email, password });
-            login(res.data);
+            login({ token: res.data.token });
             toast.success("Login successful");
             navigate("/dashboard");
         } catch (err) {
