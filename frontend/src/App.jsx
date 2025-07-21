@@ -5,11 +5,13 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import ExpenseForm from "./pages/ExpenseForm";
 import AdminPanel from "./pages/AdminPanel";
 import AuditLogs from "./pages/AuditLogs";
+import RegisterPage from "./pages/RegisterPage";
 
 const App = () => {
     return (
         <Routes>
             <Route path="/" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
             <Route
                 path="/dashboard"
                 element={
