@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { loginUser } from "../api/auth";
 import {
@@ -10,6 +10,7 @@ import {
     Paper,
     IconButton,
     InputAdornment,
+    Link
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { toast } from "react-hot-toast";
@@ -45,7 +46,7 @@ const LoginPage = () => {
     return (
         <Box className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
             <Paper elevation={3} className="p-8 w-full max-w-md">
-                <Typography variant="h5" className="mb-6 text-center font-semibold">
+                <Typography mb={3} variant="h5" className="mb-6 text-center font-semibold">
                     Login
                 </Typography>
                 <form onSubmit={handleSubmit}>
@@ -94,6 +95,19 @@ const LoginPage = () => {
                     >
                         {loading ? "Logging in..." : "Login"}
                     </Button>
+                    <Box mt={3} textAlign="center">
+                        <Typography variant="body2">
+                            Don't have an account?{" "}
+                            <Link
+                                component={RouterLink}
+                                to="/register"
+                                underline="hover"
+                                sx={{ color: "primary.main", fontWeight: 500 }}
+                            >
+                                Register
+                            </Link>
+                        </Typography>
+                    </Box>
                 </form>
             </Paper>
         </Box>
