@@ -3,6 +3,7 @@ import LoginPage from "./pages/LoginPage";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ExpenseForm from "./pages/ExpenseForm";
+import AdminPanel from "./pages/AdminPanel";
 
 const App = () => {
     return (
@@ -21,6 +22,15 @@ const App = () => {
                 element={
                     <ProtectedRoute>
                         <ExpenseForm />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/admin"
+                element={
+                    <ProtectedRoute adminOnly>
+                        <AdminPanel />
                     </ProtectedRoute>
                 }
             />
