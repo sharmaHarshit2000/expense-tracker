@@ -6,47 +6,51 @@ import ExpenseForm from "./pages/ExpenseForm";
 import AdminPanel from "./pages/AdminPanel";
 import AuditLogs from "./pages/AuditLogs";
 import RegisterPage from "./pages/RegisterPage";
+import Header from "./components/Header";
 
 const App = () => {
     return (
-        <Routes>
-            <Route path="/" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route
-                path="/dashboard"
-                element={
-                    <ProtectedRoute>
-                        <Dashboard />
-                    </ProtectedRoute>
-                }
-            />
-            <Route
-                path="/add-expense"
-                element={
-                    <ProtectedRoute>
-                        <ExpenseForm />
-                    </ProtectedRoute>
-                }
-            />
+        <>
+      <Header />
 
-            <Route
-                path="/admin"
-                element={
-                    <ProtectedRoute adminOnly>
-                        <AdminPanel />
-                    </ProtectedRoute>
-                }
-            />
-            <Route
-                path="/audit-logs"
-                element={
-                    <ProtectedRoute adminOnly>
-                        <AuditLogs />
-                    </ProtectedRoute>
-                }
-            />
-        </Routes>
+            <Routes>
+                <Route path="/" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route
+                    path="/dashboard"
+                    element={
+                        <ProtectedRoute>
+                            <Dashboard />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/add-expense"
+                    element={
+                        <ProtectedRoute>
+                            <ExpenseForm />
+                        </ProtectedRoute>
+                    }
+                />
 
+                <Route
+                    path="/admin"
+                    element={
+                        <ProtectedRoute adminOnly>
+                            <AdminPanel />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/audit-logs"
+                    element={
+                        <ProtectedRoute adminOnly>
+                            <AuditLogs />
+                        </ProtectedRoute>
+                    }
+                />
+            </Routes>
+        </>
     )
 
 }
