@@ -27,12 +27,7 @@ export const AuthProvider = ({ children }) => {
   const login = async ({ token }) => {
     localStorage.setItem("token", token);
     setToken(token);
-    try {
-      const res = await getMe();
-      setUser(res.data);
-    } catch (err) {
-      logout();
-    }
+   
   };
 
   const logout = () => {

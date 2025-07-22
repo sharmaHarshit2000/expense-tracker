@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { loginUser } from "../api/auth";
@@ -21,7 +21,14 @@ const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const { login } = useAuth();
+    const { login, user, loading: authLoading } = useAuth();
+
+
+    useEffect(() => {
+        if (!authLoading && user) {
+            navigate("/dashboard");
+        }
+    }, [authLoading, user]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -35,7 +42,6 @@ const LoginPage = () => {
             const res = await loginUser({ email, password });
             login({ token: res.data.token });
             toast.success("Login successful");
-            navigate("/dashboard");
         } catch (err) {
             toast.error(err.response?.data?.message || "Login failed");
         } finally {
