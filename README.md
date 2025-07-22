@@ -159,17 +159,39 @@ expense-tracker/
 
 ---
 
-## 🖼️ Screenshots
+## 📸 Screenshots
 
-> To view the dashboard and admin panel, you must login as an **admin**.
+🧑‍💼 To view **Audit Logs** and **Admin Panel**, login as an **admin** user.
 
-| Login | Register | Dashboard |
-|-------|----------|-----------|
-| ![](./screenshots/login.png) | ![](./screenshots/register.png) | ![](./screenshots/dashboard.png) |
+---
 
-| Expenses | Admin Panel | Audit Logs |
-|----------|-------------|-------------|
-| ![](./screenshots/expenses.png) | ![](./screenshots/admin-panel.png) | ![](./screenshots/audit-logs.png) |
+### 🔐 Login Page  
+![Login](./screenshots/login.png)
+
+---
+
+### 📝 Register Page  
+![Register](./screenshots/register.png)
+
+---
+
+### 📊 Dashboard  
+![Dashboard](./screenshots/dashboard.png)
+
+---
+
+### 💰 Expenses  
+![Expenses](./screenshots/expenses.png)
+
+---
+
+### 📁 Audit Logs  
+![Audit Logs](./screenshots/audit-logs.png)
+
+---
+
+### 🛠️ Admin Panel  
+![Admin Panel](./screenshots/admin-panel.png)
 
 ---
 
