@@ -10,49 +10,51 @@ import Header from "./components/Header";
 
 const App = () => {
     return (
-        <>
-      <Header />
+        <Box className="flex flex-col min-h-screen">
+            <Header />
+            
+            <Box component="main" className="flex-grow">
+                <Routes>
+                    <Route path="/" element={<LoginPage />} />
+                    <Route path="/register" element={<RegisterPage />} />
+                    <Route
+                        path="/dashboard"
+                        element={
+                            <ProtectedRoute>
+                                <Dashboard />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/add-expense"
+                        element={
+                            <ProtectedRoute>
+                                <ExpenseForm />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/admin"
+                        element={
+                            <ProtectedRoute adminOnly>
+                                <AdminPanel />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/audit-logs"
+                        element={
+                            <ProtectedRoute adminOnly>
+                                <AuditLogs />
+                            </ProtectedRoute>
+                        }
+                    />
+                </Routes>
+            </Box>
 
-            <Routes>
-                <Route path="/" element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
-                <Route
-                    path="/dashboard"
-                    element={
-                        <ProtectedRoute>
-                            <Dashboard />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="/add-expense"
-                    element={
-                        <ProtectedRoute>
-                            <ExpenseForm />
-                        </ProtectedRoute>
-                    }
-                />
-
-                <Route
-                    path="/admin"
-                    element={
-                        <ProtectedRoute adminOnly>
-                            <AdminPanel />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="/audit-logs"
-                    element={
-                        <ProtectedRoute adminOnly>
-                            <AuditLogs />
-                        </ProtectedRoute>
-                    }
-                />
-            </Routes>
-        </>
-    )
-
-}
+            <Footer />
+        </Box>
+    );
+};
 
 export default App;
