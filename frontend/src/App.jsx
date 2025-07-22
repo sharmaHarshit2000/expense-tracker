@@ -7,12 +7,14 @@ import AdminPanel from "./pages/AdminPanel";
 import AuditLogs from "./pages/AuditLogs";
 import RegisterPage from "./pages/RegisterPage";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
+import { Box } from "@mui/material";
 
 const App = () => {
     return (
         <Box className="flex flex-col min-h-screen">
             <Header />
-            
+
             <Box component="main" className="flex-grow">
                 <Routes>
                     <Route path="/" element={<LoginPage />} />
