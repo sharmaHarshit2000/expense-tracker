@@ -1,9 +1,9 @@
 const Loader = () => {
   return (
     <div className="flex justify-center items-center min-h-[200px]">
-      <div className="w-12 h-12 rounded-full border-4 border-t-transparent border-blue-600 animate-spin bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
+      <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
     </div>
   );
 };
 
-export default Loader
+export default Loader;
