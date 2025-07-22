@@ -5,6 +5,15 @@ import AuditLog from "../models/AuditLog.js";
 export const addExpense = async (req, res) => {
   try {
     const expense = await Expense.create({ ...req.body, user: req.user._id });
+
+    // Log the creation to AuditLog
+    await AuditLog.create({
+      action: "Expense Added",
+      user: req.user._id,
+      targetUser: req.user._id,
+      details: `${req.user.name} (${req.user.email}) added a new expense of ₹${expense.amount} for ${expense.category}`,
+    });
+
     res.status(201).json(expense);
   } catch (err) {
     console.error("Add Expense Error:", err.message);
