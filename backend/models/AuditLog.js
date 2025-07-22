@@ -6,6 +6,7 @@ const auditLogSchema = new mongoose.Schema(
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     targetUser: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     details: { type: String },
+    userRole: { type: String, enum: ["admin", "user"], default: "user" },
   },
   { timestamps: true }
 );

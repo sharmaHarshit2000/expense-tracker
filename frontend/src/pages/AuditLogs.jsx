@@ -66,10 +66,10 @@ const AuditLogs = () => {
                                 <Divider className="my-2" />
 
                                 <Typography className="text-sm text-gray-700">
-                                    <strong>Admin Name:</strong> {log.user?.name || "N/A"}
+                                    <strong>{log.userRole === "admin" ? "Admin" : "User"} Name:</strong> {log.user?.name || "N/A"}
                                 </Typography>
                                 <Typography className="text-sm text-gray-700">
-                                    <strong>Admin Email:</strong> {log.user?.email || "N/A"}
+                                    <strong>{log.userRole === "admin" ? "Admin" : "User"} Email:</strong> {log.user?.email || "N/A"}
                                 </Typography>
 
                                 {log.target && (

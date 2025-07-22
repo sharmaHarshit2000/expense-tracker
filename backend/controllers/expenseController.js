@@ -11,6 +11,7 @@ export const addExpense = async (req, res) => {
       action: "Expense Added",
       user: req.user._id,
       targetUser: req.user._id,
+      userRole: req.user.role,
       details: `${req.user.name} (${req.user.email}) added a new expense of ₹${expense.amount} for ${expense.category}`,
     });
 
@@ -79,6 +80,7 @@ export const updateExpenseStatus = async (req, res) => {
       user: req.user._id,
       targetUser: expense.user._id,
       action: `Expense ${status}`,
+      userRole: req.user.role,
       details: `Admin ${req.user.email} changed status of expense ₹${expense.amount} from ${prevStatus} to ${status} for user ${expense.user.email}`,
     });
 
