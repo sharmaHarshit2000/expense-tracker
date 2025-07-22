@@ -9,7 +9,7 @@ import RegisterPage from "./pages/RegisterPage";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { Box } from "@mui/material";
-
+import NotFound from "./pages/NotFound";
 const App = () => {
     return (
         <Box className="flex flex-col min-h-screen">
@@ -51,6 +51,7 @@ const App = () => {
                             </ProtectedRoute>
                         }
                     />
+                    <Route path="*" element={<NotFound />} /> 
                 </Routes>
             </Box>
 
