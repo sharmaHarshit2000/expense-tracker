@@ -25,8 +25,8 @@ const LoginPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (password.length < 5) {
-            toast.error("Password must be at least 5 characters");
+        if (password.length < 6) {
+            toast.error("Password must be at least 6 characters");
             return;
         }
 
@@ -46,7 +46,7 @@ const LoginPage = () => {
     return (
         <Box className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
             <Paper elevation={3} className="p-8 w-full max-w-md">
-                <Typography mb={3} variant="h5" className="mb-6 text-center font-semibold">
+                <Typography variant="h5" gutterBottom align="center" sx={{ fontWeight: "bold" }}>
                     Login
                 </Typography>
                 <form onSubmit={handleSubmit}>

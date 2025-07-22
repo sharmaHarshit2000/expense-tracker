@@ -49,7 +49,9 @@ const RegisterPage = () => {
     return (
         <Container maxWidth="sm" className="py-12">
             <Box className="bg-white p-6 rounded shadow">
-                <Typography variant="h4" className="text-center" gutterBottom>Register</Typography>
+                <Typography variant="h5" gutterBottom align="center" sx={{ fontWeight: "bold" }}>
+                    Register
+                </Typography>
                 <form onSubmit={handleSubmit}>
                     <TextField
                         name="name"

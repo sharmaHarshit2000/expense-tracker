@@ -47,7 +47,7 @@ const ExpenseForm = () => {
     return (
         <Box className="flex justify-center items-center h-screen bg-gray-100">
             <Paper elevation={3} className="p-8 w-full max-w-md">
-                <Typography variant="h5" className="mb-6 text-center">
+                <Typography variant="h5" gutterBottom align="center" sx={{ fontWeight: "bold" }}>
                     Add Expense
                 </Typography>
                 <form onSubmit={handleSubmit}>

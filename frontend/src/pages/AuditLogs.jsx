@@ -31,19 +31,9 @@ const AuditLogs = () => {
 
     return (
         <Box className="p-6 bg-gray-100 min-h-screen">
-            <Typography
-                variant="h4"
-                gutterBottom
-                align="center"
-                sx={{
-                    fontWeight: "bold",
-                    color: "text.primary",
-                    mb: 6,
-                }}
-            >
+            <Typography variant="h5" gutterBottom align="center" sx={{ fontWeight: "bold" }}>
                 Audit Logs
             </Typography>
-
             {loading ? (
                 <Box className="flex justify-center items-center h-40">
                     <CircularProgress />

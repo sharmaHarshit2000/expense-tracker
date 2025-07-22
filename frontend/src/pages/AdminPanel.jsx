@@ -44,10 +44,9 @@ const AdminPanel = () => {
 
   return (
     <Box sx={{ p: 4, bgcolor: "#f4f6f8", minHeight: "100vh" }}>
-      <Typography variant="h4" gutterBottom className="text-center ">
-        Admin Panel - All Expenses
-      </Typography>
-
+        <Typography variant="h5" gutterBottom align="center" sx={{ fontWeight: "bold" }}>
+                        Admin Panel - All Expenses
+        </Typography>
       {loading ? (
         <Box sx={{ display: "flex", justifyContent: "center", mt: 10 }}>
           <CircularProgress size={50} />
