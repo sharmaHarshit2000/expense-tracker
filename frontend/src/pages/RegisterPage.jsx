@@ -29,9 +29,15 @@ const RegisterPage = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const emailRegex = /^\S+@\S+\.\S+$/;
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (!emailRegex.test(formData.email)) {
+            toast.error("Please enter a valid email address");
+            return;
+        }
         if (formData.password.length < 6) {
             toast.error("Password must be at least 6 characters long");
             return;
