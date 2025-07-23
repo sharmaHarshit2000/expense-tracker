@@ -13,7 +13,10 @@ import {
 import { toast } from "react-hot-toast";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
+import DownloadIcon from "@mui/icons-material/Download";
 import { getAllExpenses, updateExpenseStatus } from "../api/expense";
+import Papa from "papaparse";
+
 
 const AdminPanel = () => {
   const [expenses, setExpenses] = useState([]);
@@ -46,6 +49,33 @@ const AdminPanel = () => {
     } catch (err) {
       toast.error("Status update failed");
     }
+  };
+
+  const handleExportCSV = () => {
+    if (filteredExpenses.length === 0) {
+      toast.error("No expenses to export");
+      return;
+    }
+
+    const csv = Papa.unparse(
+      filteredExpenses.map((e) => ({
+        ID: e._id,
+        Amount: e.amount,
+        Category: e.category,
+        Status: e.status,
+        "User Name": e.user?.name || "",
+        "User Email": e.user?.email || "",
+        Date: new Date(e.date).toLocaleDateString(),
+        Notes: e.notes || "",
+      }))
+    );
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", "expenses.csv");
+    link.click();
   };
 
   useEffect(() => {
@@ -137,6 +167,32 @@ const AdminPanel = () => {
           />
         </Stack>
       </Paper>
+
+      {/* CSV BUTTON SECTION */}
+      <Box
+        display="flex"
+        justifyContent="flex-end"
+        alignItems="center"
+        sx={{ mb: 3 }}
+      >
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleExportCSV}
+          startIcon={<DownloadIcon />}
+          sx={{
+            textTransform: "none",
+            fontWeight: 600,
+            borderRadius: 2,
+            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+            px: 3,
+            py: 1,
+          }}
+        >
+          Export CSV
+        </Button>
+      </Box>
+
 
       {/* EXPENSE LIST */}
       {loading ? (
