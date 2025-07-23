@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { getAllExpenses, updateExpenseStatus } from "../api/expense";
 import {
   Box,
   Typography,
@@ -8,19 +7,30 @@ import {
   Stack,
   Paper,
   Grid,
+  MenuItem,
+  TextField,
 } from "@mui/material";
 import { toast } from "react-hot-toast";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { getAllExpenses, updateExpenseStatus } from "../api/expense";
 
 const AdminPanel = () => {
   const [expenses, setExpenses] = useState([]);
+  const [filteredExpenses, setFilteredExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [filters, setFilters] = useState({
+    status: "",
+    category: "",
+    user: "",
+  });
 
   const fetchAll = async () => {
     try {
       const res = await getAllExpenses();
       setExpenses(res.data);
+      setFilteredExpenses(res.data);
     } catch (err) {
       toast.error("Failed to load expenses");
     } finally {
@@ -39,65 +49,163 @@ const AdminPanel = () => {
   };
 
   useEffect(() => {
+    const filtered = expenses.filter((expense) => {
+      const matchStatus = filters.status
+        ? expense.status === filters.status
+        : true;
+
+      const matchCategory = filters.category
+        ? expense.category === filters.category
+        : true;
+
+      const matchUser = filters.user
+        ? expense.user?.name
+          .toLowerCase()
+          .includes(filters.user.toLowerCase())
+        : true;
+
+      return matchStatus && matchCategory && matchUser;
+    });
+
+    setFilteredExpenses(filtered);
+  }, [filters, expenses]);
+
+  useEffect(() => {
     fetchAll();
   }, []);
 
+  const categories = [...new Set(expenses.map((e) => e.category))];
+
   return (
-    <Box sx={{ p: 4, bgcolor: "#f4f6f8", minHeight: "100vh" }}>
-        <Typography variant="h5" gutterBottom align="center" sx={{ fontWeight: "bold" }}>
-                        Admin Panel - All Expenses
-        </Typography>
+    <Box sx={{ p: { xs: 2, md: 4 }, bgcolor: "#f9fafb", minHeight: "100vh" }}>
+      <Typography
+        variant="h5"
+        align="center"
+        gutterBottom
+        sx={{ fontWeight: "bold", mb: 3 }}
+      >
+        Admin Panel – All Expenses
+      </Typography>
+
+      {/* FILTERS */}
+      <Paper elevation={1} sx={{ p: 2, mb: 4 }}>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={2}
+          alignItems="center"
+          justifyContent="center"
+          flexWrap="wrap"
+        >
+          <TextField
+            select
+            label="Status"
+            value={filters.status}
+            onChange={(e) => setFilters({ ...filters, status: e.target.value })}
+            size="small"
+            sx={{ minWidth: 150 }}
+          >
+            <MenuItem value="">All</MenuItem>
+            <MenuItem value="pending">Pending</MenuItem>
+            <MenuItem value="approved">Approved</MenuItem>
+            <MenuItem value="rejected">Rejected</MenuItem>
+          </TextField>
+
+          <TextField
+            select
+            label="Category"
+            value={filters.category}
+            onChange={(e) =>
+              setFilters({ ...filters, category: e.target.value })
+            }
+            size="small"
+            sx={{ minWidth: 150 }}
+          >
+            <MenuItem value="">All</MenuItem>
+            {categories.map((cat) => (
+              <MenuItem key={cat} value={cat}>
+                {cat}
+              </MenuItem>
+            ))}
+          </TextField>
+
+          <TextField
+            label="User Name"
+            value={filters.user}
+            onChange={(e) => setFilters({ ...filters, user: e.target.value })}
+            size="small"
+            sx={{ minWidth: 200 }}
+          />
+        </Stack>
+      </Paper>
+
+      {/* EXPENSE LIST */}
       {loading ? (
         <Box sx={{ display: "flex", justifyContent: "center", mt: 10 }}>
           <CircularProgress size={50} />
         </Box>
-      ) : expenses.length === 0 ? (
-        <Typography>No expenses found.</Typography>
+      ) : filteredExpenses.length === 0 ? (
+        <Typography align="center" color="text.secondary">
+          No expenses match the filters.
+        </Typography>
       ) : (
-        <Grid container spacing={3} sx={{ flexGrow: 1 }} mt={2}>
-          {expenses.map((expense) => (
-            <Grid key={expense._id} size={{ xs: 12, sm: 6, md: 4 }}>
-              <Paper elevation={3} sx={{ p: 3 }}>
-                <Typography variant="h6" gutterBottom>
-                  {expense.category}
-                </Typography>
-                <Typography color="text.secondary">
-                  Amount: ₹{expense.amount}
-                </Typography>
-                <Typography color="text.secondary">
-                  Status:{" "}
-                  <strong
-                    style={{
-                      color:
-                        expense.status === "approved"
-                          ? "green"
-                          : expense.status === "rejected"
-                          ? "red"
-                          : "#333",
-                    }}
-                  >
-                    {expense.status}
-                  </strong>
-                </Typography>
-                <Typography color="text.secondary">
-                  User: {expense.user?.name}
-                </Typography>
-                <Typography color="text.secondary">
-                  Email: {expense.user?.email}
-                </Typography>
-                <Typography color="text.secondary">
-                  Date: {new Date(expense.date).toLocaleDateString()}
-                </Typography>
-                {expense.notes && (
-                  <Typography color="text.secondary">
-                    Note: {expense.notes}
+        <Grid container spacing={3}>
+          {filteredExpenses.map((expense) => (
+            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={expense._id}>
+              <Paper
+                elevation={3}
+                sx={{
+                  p: 3,
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Box>
+                  <Typography variant="h6" gutterBottom>
+                    {expense.category}
                   </Typography>
-                )}
+                  <Typography color="text.secondary">
+                    <strong>Amount:</strong> ₹{expense.amount}
+                  </Typography>
+                  <Typography color="text.secondary">
+                    <strong>Status:</strong>{" "}
+                    <span
+                      style={{
+                        color:
+                          expense.status === "approved"
+                            ? "green"
+                            : expense.status === "rejected"
+                              ? "red"
+                              : "#666",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {expense.status}
+                    </span>
+                  </Typography>
+                  <Typography color="text.secondary">
+                    <strong>User:</strong> {expense.user?.name}
+                  </Typography>
+                  <Typography color="text.secondary">
+                    <strong>Email:</strong> {expense.user?.email}
+                  </Typography>
+                  <Typography color="text.secondary">
+                    <strong>Date:</strong>{" "}
+                    {new Date(expense.date).toLocaleDateString()}
+                  </Typography>
+                  {expense.notes && (
+                    <Typography color="text.secondary">
+                      <strong>Note:</strong> {expense.notes}
+                    </Typography>
+                  )}
+                </Box>
 
                 <Stack direction="row" spacing={2} mt={3}>
                   <Button
                     variant="contained"
                     color="success"
+                    size="small"
                     startIcon={<CheckCircleIcon />}
                     onClick={() => handleStatusChange(expense._id, "approved")}
                   >
@@ -106,6 +214,7 @@ const AdminPanel = () => {
                   <Button
                     variant="contained"
                     color="error"
+                    size="small"
                     startIcon={<CancelIcon />}
                     onClick={() => handleStatusChange(expense._id, "rejected")}
                   >
