@@ -1,4 +1,3 @@
-
 # Expense Tracker 💸
 
 A full-stack MERN (MongoDB, Express, React, Node.js) application to manage and track your personal expenses with authentication, category-wise tracking, and dashboards.
@@ -106,6 +105,7 @@ npm run dev
 
 ## 📁 Folder Structure
 
+```txt
 expense-tracker/
 ├── backend/
 │   ├── server.js
@@ -160,6 +160,8 @@ expense-tracker/
 │   ├── admin-panel.png
 │   ├── audit-logs.png
 │   └── insight.png
+```
+
 ---
 
 ## 📸 Screenshots
@@ -199,7 +201,7 @@ expense-tracker/
 ---
 
 ### 📈 Insights (Charts via Recharts)
-![Admin Panel](./screenshots/Insights.png)
+![Insights](./screenshots/insight.png)
 
 ---
 
