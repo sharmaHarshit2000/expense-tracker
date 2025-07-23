@@ -6,7 +6,6 @@ import {
   CircularProgress,
   Stack,
   Paper,
-  Grid,
   MenuItem,
   TextField,
 } from "@mui/material";
@@ -16,7 +15,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import DownloadIcon from "@mui/icons-material/Download";
 import { getAllExpenses, updateExpenseStatus } from "../api/expense";
 import Papa from "papaparse";
-
+import Grid from '@mui/material/Grid';
 
 const AdminPanel = () => {
   const [expenses, setExpenses] = useState([]);
@@ -27,6 +26,8 @@ const AdminPanel = () => {
     status: "",
     category: "",
     user: "",
+    startDate: "",
+    endDate: "",
   });
 
   const fetchAll = async () => {
@@ -94,7 +95,22 @@ const AdminPanel = () => {
           .includes(filters.user.toLowerCase())
         : true;
 
-      return matchStatus && matchCategory && matchUser;
+      const expenseDate = new Date(expense.date);
+      const matchStartDate = filters.startDate
+        ? expenseDate >= new Date(filters.startDate)
+        : true;
+
+      const matchEndDate = filters.endDate
+        ? expenseDate <= new Date(filters.endDate)
+        : true;
+
+      return (
+        matchStatus &&
+        matchCategory &&
+        matchUser &&
+        matchStartDate &&
+        matchEndDate
+      );
     });
 
     setFilteredExpenses(filtered);
@@ -119,53 +135,84 @@ const AdminPanel = () => {
 
       {/* FILTERS */}
       <Paper elevation={1} sx={{ p: 2, mb: 4 }}>
-        <Stack
-          direction={{ xs: "column", sm: "row" }}
-          spacing={2}
-          alignItems="center"
-          justifyContent="center"
-          flexWrap="wrap"
-        >
-          <TextField
-            select
-            label="Status"
-            value={filters.status}
-            onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-            size="small"
-            sx={{ minWidth: 150 }}
-          >
-            <MenuItem value="">All</MenuItem>
-            <MenuItem value="pending">Pending</MenuItem>
-            <MenuItem value="approved">Approved</MenuItem>
-            <MenuItem value="rejected">Rejected</MenuItem>
-          </TextField>
+        <Grid container spacing={2} columns={12} justifyContent="center">
+          <Grid sx={{ gridColumn: 'span 2' }}>
+            <TextField
+              select
+              label="Status"
+              value={filters.status}
+              onChange={(e) => setFilters({ ...filters, status: e.target.value })}
+              size="small"
+              fullWidth
+              sx={{ minWidth: 200 }}
+            >
+              <MenuItem value="">All</MenuItem>
+              <MenuItem value="pending">Pending</MenuItem>
+              <MenuItem value="approved">Approved</MenuItem>
+              <MenuItem value="rejected">Rejected</MenuItem>
+            </TextField>
+          </Grid>
 
-          <TextField
-            select
-            label="Category"
-            value={filters.category}
-            onChange={(e) =>
-              setFilters({ ...filters, category: e.target.value })
-            }
-            size="small"
-            sx={{ minWidth: 150 }}
-          >
-            <MenuItem value="">All</MenuItem>
-            {categories.map((cat) => (
-              <MenuItem key={cat} value={cat}>
-                {cat}
-              </MenuItem>
-            ))}
-          </TextField>
+          <Grid sx={{ gridColumn: 'span 2' }}>
+            <TextField
+              select
+              label="Category"
+              value={filters.category}
+              onChange={(e) => setFilters({ ...filters, category: e.target.value })}
+              size="small"
+              fullWidth
+              sx={{ minWidth: 200 }}
+            >
+              <MenuItem value="">All</MenuItem>
+              {categories.map((cat) => (
+                <MenuItem key={cat} value={cat}>
+                  {cat}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
 
-          <TextField
-            label="User Name"
-            value={filters.user}
-            onChange={(e) => setFilters({ ...filters, user: e.target.value })}
-            size="small"
-            sx={{ minWidth: 200 }}
-          />
-        </Stack>
+          <Grid sx={{ gridColumn: 'span 2' }}>
+            <TextField
+              label="User Name"
+              value={filters.user}
+              onChange={(e) => setFilters({ ...filters, user: e.target.value })}
+              size="small"
+              fullWidth
+              sx={{ minWidth: 200 }}
+            />
+          </Grid>
+
+          <Grid sx={{ gridColumn: 'span 3' }}>
+            <TextField
+              label="Start Date"
+              type="date"
+              size="small"
+              fullWidth
+              value={filters.startDate}
+              onChange={(e) => setFilters({ ...filters, startDate: e.target.value })}
+              slotProps={{
+                inputLabel: { shrink: true }
+              }}
+              sx={{ minWidth: 200 }}
+            />
+          </Grid>
+
+          <Grid sx={{ gridColumn: 'span 3' }}>
+            <TextField
+              label="End Date"
+              type="date"
+              size="small"
+              fullWidth
+              value={filters.endDate}
+              onChange={(e) => setFilters({ ...filters, endDate: e.target.value })}
+              slotProps={{
+                inputLabel: { shrink: true }
+              }}
+              sx={{ minWidth: 200 }}
+            />
+          </Grid>
+        </Grid>
       </Paper>
 
       {/* CSV BUTTON SECTION */}
@@ -193,7 +240,6 @@ const AdminPanel = () => {
         </Button>
       </Box>
 
-
       {/* EXPENSE LIST */}
       {loading ? (
         <Box sx={{ display: "flex", justifyContent: "center", mt: 10 }}>
@@ -206,7 +252,7 @@ const AdminPanel = () => {
       ) : (
         <Grid container spacing={3}>
           {filteredExpenses.map((expense) => (
-            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={expense._id}>
+            <Grid key={expense._id} size={{ xs: 12, sm: 6, md: 4 }}>
               <Paper
                 elevation={3}
                 sx={{
@@ -263,7 +309,9 @@ const AdminPanel = () => {
                     color="success"
                     size="small"
                     startIcon={<CheckCircleIcon />}
-                    onClick={() => handleStatusChange(expense._id, "approved")}
+                    onClick={() =>
+                      handleStatusChange(expense._id, "approved")
+                    }
                   >
                     Approve
                   </Button>
@@ -272,7 +320,9 @@ const AdminPanel = () => {
                     color="error"
                     size="small"
                     startIcon={<CancelIcon />}
-                    onClick={() => handleStatusChange(expense._id, "rejected")}
+                    onClick={() =>
+                      handleStatusChange(expense._id, "rejected")
+                    }
                   >
                     Reject
                   </Button>
