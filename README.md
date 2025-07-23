@@ -134,8 +134,8 @@ expense-tracker/
 │   ├── main.jsx
 │   ├── components/
 │   │   ├── Header.jsx
+│   │   ├── ProtectedRoute.jsx
 │   │   ├── Footer.jsx
-│   │   └── ProtectedRoute.jsx
 │   ├── pages/
 │   │   ├── LoginPage.jsx
 │   │   ├── RegisterPage.jsx
@@ -160,8 +160,6 @@ expense-tracker/
 │   ├── admin-panel.png
 │   ├── audit-logs.png
 │   └── insight.png
-
-
 ---
 
 ## 📸 Screenshots
