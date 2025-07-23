@@ -16,11 +16,14 @@ A full-stack MERN (MongoDB, Express, React, Node.js) application to manage and t
 ## 📦 Features
 
 - User Registration & Login (JWT-based)
-- Add/Edit/Delete Expenses
-- Expense filtering by date/category
-- Dashboard with total and recent expenses
-- Responsive UI using Material UI / TailwindCSS
-- Toast notifications for feedback
+- Add, Edit, and Delete Expenses
+- Expense Filtering by Date and Category
+- Dashboard for Total and Recent Expenses
+- Admin Panel to View All Expenses and Audit Logs
+- CSV Export for Admins
+- Insight Charts using Recharts
+- Responsive UI with TailwindCSS / Material UI
+- Toast Notifications for Feedback
 
 ---
 
@@ -29,6 +32,7 @@ A full-stack MERN (MongoDB, Express, React, Node.js) application to manage and t
 - **Frontend:** React, Redux Toolkit, TailwindCSS or MUI, Axios
 - **Backend:** Node.js, Express.js, MongoDB, Mongoose, JWT
 - **Deployment:** Render (Backend), Vercel/Render (Frontend)
+- **Charting:** Recharts (Insights)
 
 ---
 
@@ -102,60 +106,60 @@ npm run dev
 
 ## 📁 Folder Structure
 
-```
 expense-tracker/
 ├── backend/
-│ ├── server.js
-│ ├── config/
-│ ├── middlewares/
-│ │ ├── authMiddleware.js
-│ │ ├── errorHandler.js
-│ │ └── notFound.js
-│ ├── routes/
-│ │ ├── authRoutes.js
-│ │ ├── expenseRoutes.js
-│ │ └── auditRoutes.js
-│ ├── controllers/
-│ │ ├── authController.js
-│ │ ├── expenseController.js
-│ │ └── auditController.js
-│ ├── models/
-│ │ ├── User.js
-│ │ ├── Expense.js
-│ │ └── AuditLog.js
-│ └── utils/
-│ └── generateToken.js
+│   ├── server.js
+│   ├── config/
+│   ├── middlewares/
+│   │   ├── authMiddleware.js
+│   │   ├── errorHandler.js
+│   │   └── notFound.js
+│   ├── routes/
+│   │   ├── authRoutes.js
+│   │   ├── expenseRoutes.js
+│   │   └── auditRoutes.js
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── expenseController.js
+│   │   └── auditController.js
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Expense.js
+│   │   └── AuditLog.js
+│   └── utils/
+│       └── generateToken.js
 │
 ├── frontend/
-│ ├── App.jsx
-│ ├── main.jsx
-│ ├── components/
-│ │ ├── Header.jsx
-│ │ ├── ProtectedRoute.jsx
-│ │ ├── Footer.jsx
-│ ├── pages/
-│ │ ├── LoginPage.jsx
-│ │ ├── RegisterPage.jsx
-│ │ ├── Dashboard.jsx
-│ │ ├── AdminPanel.jsx
-│ │ ├── ExpenseForm.jsx
-│ │ └── AuditLogs.jsx
-│ ├── context/
-│ │ └── AuthContext.jsx
-│ ├── api/
-│ │ ├── auth.js
-│ │ ├── audit.js
-│ │ ├── expense.js
-│ │ └── axios.js
+│   ├── App.jsx
+│   ├── main.jsx
+│   ├── components/
+│   │   ├── Header.jsx
+│   │   ├── ProtectedRoute.jsx
+│   │   ├── Footer.jsx
+│   ├── pages/
+│   │   ├── LoginPage.jsx
+│   │   ├── RegisterPage.jsx
+│   │   ├── Dashboard.jsx
+│   │   ├── AdminPanel.jsx
+│   │   ├── ExpenseForm.jsx
+│   │   ├── AuditLogs.jsx
+│   │   └── Insight.jsx
+│   ├── context/
+│   │   └── AuthContext.jsx
+│   ├── api/
+│   │   ├── auth.js
+│   │   ├── audit.js
+│   │   ├── expense.js
+│   │   └── axios.js
 │
 ├── screenshots/
-│ ├── login.png
-│ ├── register.png
-│ ├── dashboard.png
-│ ├── expenses.png
-│ ├── admin-panel.png
-│ └── audit-logs.png
-```
+│   ├── login.png
+│   ├── register.png
+│   ├── dashboard.png
+│   ├── expenses.png
+│   ├── admin-panel.png
+│   ├── audit-logs.png
+│   └── insight.png
 
 ---
 
@@ -192,6 +196,11 @@ expense-tracker/
 
 ### 🛠️ Admin Panel  
 ![Admin Panel](./screenshots/admin-panel.png)
+
+---
+
+### 📈 Insights (Charts via Recharts)
+![Admin Panel](./screenshots/Insights.png)
 
 ---
 
