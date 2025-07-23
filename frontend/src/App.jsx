@@ -13,6 +13,7 @@ const Dashboard = lazy(() => import("./pages/Dashboard"));
 const ExpenseForm = lazy(() => import("./pages/ExpenseForm"));
 const AdminPanel = lazy(() => import("./pages/AdminPanel"));
 const AuditLogs = lazy(() => import("./pages/AuditLogs"));
+const Insights = lazy(() => import("./pages/Insights"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => {
@@ -57,6 +58,16 @@ const App = () => {
                                 </ProtectedRoute>
                             }
                         />
+
+                        <Route
+                            path="/insights"
+                            element={
+                                <ProtectedRoute adminOnly>
+                                    <Insights />
+                                </ProtectedRoute>
+                            }
+                        />
+                        
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </Suspense>

@@ -17,6 +17,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import AddIcon from "@mui/icons-material/Add";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import ListAltIcon from "@mui/icons-material/ListAlt";
+import InsightsIcon from "@mui/icons-material/Insights";
 import { useAuth } from "../context/AuthContext";
 
 const Header = () => {
@@ -81,6 +82,11 @@ const Header = () => {
                                                 <ListAltIcon />
                                             </IconButton>
                                         </Tooltip>
+                                        <Tooltip title="Insights">
+                                            <IconButton component={RouterLink} to="/insights" color="inherit">
+                                                <InsightsIcon />
+                                            </IconButton>
+                                        </Tooltip>
                                     </>
                                 )}
                             </>
@@ -99,6 +105,9 @@ const Header = () => {
                                         </Button>
                                         <Button component={RouterLink} to="/audit-logs" color="inherit">
                                             Audit Logs
+                                        </Button>
+                                        <Button component={RouterLink} to="/insights" color="inherit">
+                                            Insights
                                         </Button>
                                     </>
                                 )}
